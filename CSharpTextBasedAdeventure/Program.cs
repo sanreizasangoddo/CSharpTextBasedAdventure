@@ -4,12 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CSharpTextBasedAdeventure
+namespace CSharpTextBasedAdventure
 {
     internal class Program
     {
         static void Main(string[] args)
         {
+            Clicker clicker = new Clicker();
+            clicker.Start();
+            clicker.Click();
         }
     }
 }
