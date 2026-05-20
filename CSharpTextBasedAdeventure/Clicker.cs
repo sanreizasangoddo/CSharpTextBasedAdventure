@@ -9,25 +9,39 @@ namespace CSharpTextBasedAdventure
     internal class Clicker
     {
         private int _amountCookies;
+        private int _amountMoney;
 
         public void Start()
         {
-            Console.WriteLine($"Cookies: {_amountCookies}");
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine($"Cookies: {_amountCookies}");
+                Console.WriteLine($"Money: ${_amountMoney}");
+                Console.WriteLine("Druk op spatie voor een cookie of s om ze te verkopen.");
+
+                ConsoleKeyInfo key = Console.ReadKey();
+
+                if (key.Key == ConsoleKey.S)
+                {
+                    Sell();
+                }
+                else if (key.Key == ConsoleKey.Spacebar)
+                {
+                    Click();
+                }
+            }
         }
 
         public void Click()
         {
-            while (true)
-            {
-                ConsoleKeyInfo keyInfo = Console.ReadKey();
+            _amountCookies += 1;
+        }
 
-                if (keyInfo.Key == ConsoleKey.Spacebar)
-                {
-                    _amountCookies += 1;
-                    Console.Clear();
-                    Console.WriteLine($"Cookies: {_amountCookies}");
-                }
-            }
+        public void Sell()
+        {
+            _amountMoney += _amountCookies;
+            _amountCookies = 0;
         }
     }
 }
