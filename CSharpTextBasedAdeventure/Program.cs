@@ -1,4 +1,5 @@
-﻿using CSharpTextBasedAdventure;
+﻿using CSharpTextBasedAdeventure;
+using CSharpTextBasedAdventure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,20 @@ namespace CSharpTextBasedAdventure
     {
         static void Main(string[] args)
         {
-            Clicker clicker = new Clicker();
-            clicker.Start();
+            List<Upgrades> upgrades = new List<Upgrades>();
+            upgrades.Add(new Grandma());
+            upgrades.Add(new Factory());
+
+            foreach (Upgrades u in upgrades)
+            {
+                u.Info();
+            }
+
+            Clicker game = new Clicker();
+
+            _ = game.GenerateCookies();
+
+            game.Start();
         }
     }
 }
