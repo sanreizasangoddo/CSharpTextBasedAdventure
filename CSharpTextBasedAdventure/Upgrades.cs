@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CSharpTextBasedAdeventure
+namespace CSharpTextBasedAdventure
 {
     internal abstract class Upgrades
     {
@@ -14,5 +14,29 @@ namespace CSharpTextBasedAdeventure
         public bool Purchased;
 
         public abstract void Apply(Clicker game);
+
+        public void BuyUpgrade(Clicker game)
+        {
+            if (!Purchased && game.Cookies >= Cost)
+            {
+                game.Cookies -= Cost;
+
+                Apply(game);
+                Purchased = true;
+
+                Console.WriteLine($"{Name} gekocht!");
+                Console.ReadKey();
+            }
+            else if (!Purchased && game.Cookies < Cost)
+            {
+                Console.WriteLine("\nJe hebt niet genoeg geld voor deze upgrade.");
+                Console.ReadKey();
+            }
+            else if (Purchased)
+            {
+                Console.WriteLine("\nJe hebt deze upgrade al gekocht.");
+                Console.ReadKey();
+            }
+        }
     }
 }

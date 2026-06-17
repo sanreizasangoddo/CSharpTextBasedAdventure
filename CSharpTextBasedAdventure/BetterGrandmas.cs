@@ -7,16 +7,17 @@ using System.Threading.Tasks;
 
 namespace CSharpTextBasedAdventure
 {
-    internal class Factory : Buildings
+    internal class BetterGrandmas : Upgrades
     {
-        public Factory() : base("Factory", 500, 5)
+        public BetterGrandmas()
         {
-
+            Name = "Better Grandmas";
+            Cost = 5000;
         }
 
-        public override void Info()
+        public override void Apply(Clicker game)
         {
-            base.Info();
+            game.ClickMultiplier *= 4f;
         }
     }
 }

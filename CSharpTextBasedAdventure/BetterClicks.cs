@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CSharpTextBasedAdeventure
+namespace CSharpTextBasedAdventure
 {
-    internal class BetterOvens : Upgrades
+    internal class BetterClicks : Upgrades
     {
-        public BetterOvens()
+        public BetterClicks()
         {
-            Name = "Better Ovens";
+            Name = "Better Clicks";
             Cost = 1000;
         }
 

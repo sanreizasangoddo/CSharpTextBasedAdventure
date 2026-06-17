@@ -1,8 +1,8 @@
-﻿using CSharpTextBasedAdeventure;
-using CSharpTextBasedAdventure;
+﻿using CSharpTextBasedAdventure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -13,7 +13,14 @@ namespace CSharpTextBasedAdventure
     {
         private float _amountCookies;
         private float _amountMoney;
+
         public float ClickMultiplier { get; set; } = 1f;
+        
+        public float Cookies
+        {
+            get => _amountCookies;
+            set => _amountCookies = value;
+        }
 
         private List<Buildings> _buildings = new List<Buildings>()
         {
@@ -23,7 +30,8 @@ namespace CSharpTextBasedAdventure
 
         private List<Upgrades> _upgrades = new List<Upgrades>()
         {
-            new BetterOvens()
+            new BetterClicks(),
+            new BetterGrandmas()
         };
 
         Grandma grandma = new Grandma();
@@ -50,8 +58,9 @@ namespace CSharpTextBasedAdventure
                     Shop();
 
                     int choice;
+                    int maxChoice = _buildings.Count + _upgrades.Count;
 
-                    while (!int.TryParse(Console.ReadLine(), out choice) || choice < 0 || choice > _buildings.Count)
+                    while (!int.TryParse(Console.ReadLine(), out choice) || choice < 0 || choice > maxChoice)
                     {
                         Shop();
                         Console.WriteLine("\nOngeldig keuze. Typ opnieuw in.");
@@ -63,7 +72,16 @@ namespace CSharpTextBasedAdventure
                         continue;
                     }
 
-                    BuyBuilding(choice);
+                    if (choice <= _buildings.Count)
+                    {
+                        BuyBuilding(choice);
+                    }
+                    else
+                    {
+                        int upgradeIndex = choice - _buildings.Count - 1;
+
+                        _upgrades[upgradeIndex].BuyUpgrade(this);
+                    }
                 }
 
                 Console.Clear();
@@ -92,11 +110,27 @@ namespace CSharpTextBasedAdventure
             Console.Clear();
             Console.WriteLine($"Money: $ {_amountMoney}");
             Console.WriteLine("\n=== SHOP ===");
+            Console.WriteLine("\nBuildings:");
 
-            for (int i = 0; i < _buildings.Count; i++)
+            int number = 1;
+
+            foreach (Buildings building in _buildings)
             {
-                Buildings b = _buildings[i];
-                Console.WriteLine($"{i + 1}. {b.Name} - $ {b.Cost}");
+                Console.WriteLine($"{number}. {building.Name} - $ {building.Cost}");
+                number++;
+            }
+            
+            grandma.Info();
+            factory.Info();
+
+            Console.WriteLine("\nUpgrades:");
+
+            foreach (Upgrades upgrade in _upgrades)
+            {
+                string status = upgrade.Purchased ? "(GEKOCHT)" : "";
+
+                Console.WriteLine($"{number}. {upgrade.Name} - {upgrade.Cost} cookies");
+                number++;
             }
 
             Console.WriteLine("\n0. Terug");
@@ -105,10 +139,10 @@ namespace CSharpTextBasedAdventure
         public void PlayerInfo()
         {
             Console.WriteLine($"Cookies: {_amountCookies}");
-            Console.WriteLine($"Money: ${_amountMoney}");
+            Console.WriteLine($"Money: $ {_amountMoney}");
             Console.WriteLine("Druk op spatie en dan op enter voor een cookie.");
             Console.WriteLine("Typ /sell om je cookies te verkopen voor geld.");
-            Console.WriteLine("Typ /shop om naar de shop te gaan.\n");
+            Console.WriteLine("Typ /shop om naar de shop te gaan.");
         }
 
         public void BuyBuilding(int index)
@@ -121,20 +155,20 @@ namespace CSharpTextBasedAdventure
                 choice.AmountOwned++;
 
                 choice.Cost = (int)(choice.Cost * 1.2);
-                
+
                 Console.WriteLine($"\nJe hebt een {choice.Name} gekocht!");
                 Console.ReadKey();
             }
             else
             {
-                Console.WriteLine($"\nJe hebt niet genoeg cookies.");
+                Console.WriteLine($"\nJe hebt niet genoeg geld.");
                 Console.ReadKey();
             }
         }
 
         private void Click()
         {
-            _amountCookies += 1;
+            _amountCookies += 1 * ClickMultiplier;
 
             Console.Clear();
             PlayerInfo();
