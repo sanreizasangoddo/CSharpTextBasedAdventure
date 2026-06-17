@@ -43,11 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BetterOvens.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="Grandma.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Clicker.cs" />
+    <Compile Include="Buildings.cs" />
     <Compile Include="Upgrades.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace CSharpTextBasedAdventure
 {
-    internal class Factory : Upgrades
+    internal class Grandma : Buildings
     {
-        public Factory() : base("Factory", 500, 5)
+        public Grandma() : base("Grandma", 100, 1)
         {
 
         }

@@ -1,4 +1,5 @@
-﻿using CSharpTextBasedAdventure;
+﻿using CSharpTextBasedAdeventure;
+using CSharpTextBasedAdventure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +13,21 @@ namespace CSharpTextBasedAdventure
     {
         private float _amountCookies;
         private float _amountMoney;
+        public float ClickMultiplier { get; set; } = 1f;
 
-        private List<Upgrades> _upgrades = new List<Upgrades>()
+        private List<Buildings> _buildings = new List<Buildings>()
         {
             new Grandma(),
             new Factory()
         };
+
+        private List<Upgrades> _upgrades = new List<Upgrades>()
+        {
+            new BetterOvens()
+        };
+
+        Grandma grandma = new Grandma();
+        Factory factory = new Factory();
 
         public void Start()
         {
@@ -41,7 +51,7 @@ namespace CSharpTextBasedAdventure
 
                     int choice;
 
-                    while (!int.TryParse(Console.ReadLine(), out choice) || choice < 0 || choice > _upgrades.Count)
+                    while (!int.TryParse(Console.ReadLine(), out choice) || choice < 0 || choice > _buildings.Count)
                     {
                         Shop();
                         Console.WriteLine("\nOngeldig keuze. Typ opnieuw in.");
@@ -53,7 +63,7 @@ namespace CSharpTextBasedAdventure
                         continue;
                     }
 
-                    BuyUpgrade(choice);
+                    BuyBuilding(choice);
                 }
 
                 Console.Clear();
@@ -66,7 +76,7 @@ namespace CSharpTextBasedAdventure
             {
                 int totalCps = 0;
 
-                foreach (Upgrades upgrade in _upgrades)
+                foreach (Buildings upgrade in _buildings)
                 {
                     totalCps += upgrade.CookiesPerSecond * upgrade.AmountOwned;
                 }
@@ -83,10 +93,10 @@ namespace CSharpTextBasedAdventure
             Console.WriteLine($"Money: $ {_amountMoney}");
             Console.WriteLine("\n=== SHOP ===");
 
-            for (int i = 0; i < _upgrades.Count; i++)
+            for (int i = 0; i < _buildings.Count; i++)
             {
-                Upgrades u = _upgrades[i];
-                Console.WriteLine($"{i + 1}. {u.Name} - $ {u.Cost}");
+                Buildings b = _buildings[i];
+                Console.WriteLine($"{i + 1}. {b.Name} - $ {b.Cost}");
             }
 
             Console.WriteLine("\n0. Terug");
@@ -98,12 +108,12 @@ namespace CSharpTextBasedAdventure
             Console.WriteLine($"Money: ${_amountMoney}");
             Console.WriteLine("Druk op spatie en dan op enter voor een cookie.");
             Console.WriteLine("Typ /sell om je cookies te verkopen voor geld.");
-            Console.WriteLine("Typ /shop om naar de shop te gaan.");
+            Console.WriteLine("Typ /shop om naar de shop te gaan.\n");
         }
 
-        public void BuyUpgrade(int index)
+        public void BuyBuilding(int index)
         {
-            Upgrades choice = _upgrades[index - 1];
+            Buildings choice = _buildings[index - 1];
 
             if (_amountMoney >= choice.Cost)
             {

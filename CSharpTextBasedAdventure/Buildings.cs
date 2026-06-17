@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace CSharpTextBasedAdventure
 {
-    internal class Upgrades
+    internal class Buildings
     {
         public string Name;
         public int Cost;
         public int CookiesPerSecond;
         public int AmountOwned;
 
-        public Upgrades(string name, int cost, int cps)
+        public Buildings(string name, int cost, int cps)
         {
             Name = name;
             Cost = cost;
@@ -24,7 +24,6 @@ namespace CSharpTextBasedAdventure
         public virtual void Info()
         {
             Console.WriteLine(Name);
-            Console.WriteLine($"Buy: {Cost}");
             Console.WriteLine($"CPS: {CookiesPerSecond}");
         }
     }
