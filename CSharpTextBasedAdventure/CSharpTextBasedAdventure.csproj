@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BetterGrandmas.cs" />
-    <Compile Include="BetterOvens.cs" />
+    <Compile Include="BetterClicks.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="Grandma.cs" />
     <Compile Include="Program.cs" />
