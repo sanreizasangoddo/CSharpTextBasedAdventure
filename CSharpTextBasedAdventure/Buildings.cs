@@ -24,7 +24,7 @@ namespace CSharpTextBasedAdventure
         public virtual void Info()
         {
             Console.WriteLine(Name);
-            Console.WriteLine($"CPS: {CookiesPerSecond}");
+            Console.WriteLine($"CPS: {CookiesPerSecond * AmountOwned}");
         }
     }
 }

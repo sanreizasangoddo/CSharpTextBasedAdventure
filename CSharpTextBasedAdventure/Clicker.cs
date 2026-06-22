@@ -129,7 +129,7 @@ namespace CSharpTextBasedAdventure
             {
                 string status = upgrade.Purchased ? "(GEKOCHT)" : "";
 
-                Console.WriteLine($"{number}. {upgrade.Name} - {upgrade.Cost} cookies");
+                Console.WriteLine($"{number}. {upgrade.Name} - {upgrade.Cost} cookies {status}");
                 number++;
             }
 
