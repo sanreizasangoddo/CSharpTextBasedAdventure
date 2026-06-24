@@ -43,6 +43,11 @@ namespace CSharpTextBasedAdventure
             {
                 PlayerInfo();
 
+                if (CheckWin())
+                {
+                    break;
+                }
+
                 string input = Console.ReadLine();
 
                 if (input == "/sell")
@@ -105,7 +110,7 @@ namespace CSharpTextBasedAdventure
             }
         }
 
-        public void Shop()
+        private void Shop()
         {
             Console.Clear();
             Console.WriteLine($"Money: $ {_amountMoney}");
@@ -181,6 +186,27 @@ namespace CSharpTextBasedAdventure
 
             Console.Clear();
             PlayerInfo();
+        }
+
+        private bool CheckWin()
+        {
+            if (_amountCookies >= 100000)
+            {
+                Console.Clear();
+                Console.WriteLine("EINDE: Master Baker");
+                Console.WriteLine("Je hebt 100.000 cookies verzameld!");
+                return true;
+            }
+
+            if (_amountMoney >= 1000000)
+            {
+                Console.Clear();
+                Console.WriteLine("EINDE: Cookie Miljonair");
+                Console.WriteLine("Je hebt $ 1.000.000 verdient!");
+                return true;
+            }
+
+            return false;
         }
     }
 }
