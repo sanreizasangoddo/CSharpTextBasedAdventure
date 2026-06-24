@@ -15,7 +15,8 @@ namespace CSharpTextBasedAdventure
         private float _amountMoney;
 
         public float ClickMultiplier { get; set; } = 1f;
-        
+
+        // Laat upgrades direct het aantal cookies aanpassen
         public float Cookies
         {
             get => _amountCookies;
@@ -98,6 +99,7 @@ namespace CSharpTextBasedAdventure
             {
                 int totalCps = 0;
 
+                // Bereken de totale cookies per seconde van alle gebouwen
                 foreach (Buildings building in _buildings)
                 {
                     totalCps += building.GetCps();
@@ -105,11 +107,13 @@ namespace CSharpTextBasedAdventure
 
                 _amountCookies += totalCps;
 
+                // 5% kans per seconde op een random event
                 if (_random.Next(100) < 5)
                 {
                     TriggerRandomEvent();
                 }
 
+                // Wacht 1 seconde voordat de volgende productie plaatsvindt
                 await Task.Delay(1000);
             }
         }
@@ -148,6 +152,7 @@ namespace CSharpTextBasedAdventure
 
         private void TriggerRandomEvent()
         {
+            // Kies een willekeurig event tussen 0 en 4
             int eventID = _random.Next(5);
            
             switch (eventID)
@@ -186,6 +191,8 @@ namespace CSharpTextBasedAdventure
             }
         }
 
+        // Tekent het hoofdscherm van de speler
+        // Wordt telkens opnieuw weergegeven
         public void PlayerInfo()
         {
             Console.WriteLine($"Cookies: {_amountCookies}");
@@ -203,6 +210,7 @@ namespace CSharpTextBasedAdventure
 
         public void BuyBuilding(int index)
         {
+            // Zet de gekozen shop-optie om naar het juiste gebouw
             Buildings choice = _buildings[index - 1];
 
             if (_amountMoney >= choice.Cost)
@@ -210,6 +218,7 @@ namespace CSharpTextBasedAdventure
                 _amountMoney -= choice.Cost;
                 choice.AmountOwned++;
 
+                // Verhoog de prijs voor de volgende aankoop
                 choice.Cost = (int)(choice.Cost * 1.2);
 
                 Console.WriteLine($"\nJe hebt een {choice.Name} gekocht!");

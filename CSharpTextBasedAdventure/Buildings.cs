@@ -21,11 +21,14 @@ namespace CSharpTextBasedAdventure
             AmountOwned = 0;
         }
 
+        // Kan door child classes worden overschreven om extra informatie te tonen
         public virtual void Info()
         {
             Console.WriteLine($"\n{Name}:");
         }
 
+        // Berekent de totale CPS van dit gebouw
+        // Child classes kunnen dit overschrijven voor speciale effecten
         public virtual int GetCps()
         {
             return CookiesPerSecond * AmountOwned;

@@ -13,7 +13,10 @@ namespace CSharpTextBasedAdventure
         public int Cost;
         public bool Purchased;
 
+        // Wordt door child classes ingevuld
+        // Hier staat het daadwerkelijke effect van de upgrade
         public abstract void Apply(Clicker game);
+
 
         public void BuyUpgrade(Clicker game)
         {
@@ -21,7 +24,10 @@ namespace CSharpTextBasedAdventure
             {
                 game.Cookies -= Cost;
 
+                // Pas het effect van de upgrade toe
                 Apply(game);
+
+                // Zorg ervoor dat de upgrade niet opnieuw gekocht kan worden
                 Purchased = true;
 
                 Console.WriteLine($"{Name} gekocht!");
