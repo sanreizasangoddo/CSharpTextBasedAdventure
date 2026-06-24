@@ -17,6 +17,15 @@ namespace CSharpTextBasedAdventure
         public override void Info()
         {
             base.Info();
+            Console.WriteLine("Een gigantische koekjesfabriek");
+        }
+
+        public override int GetCps()
+        {
+            if (AmountOwned == 0)
+                return 0;
+
+            return base.GetCps() + 5;
         }
     }
 }

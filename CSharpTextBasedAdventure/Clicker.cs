@@ -22,6 +22,8 @@ namespace CSharpTextBasedAdventure
             set => _amountCookies = value;
         }
 
+        private string _lastEventMessage;
+
         private List<Buildings> _buildings = new List<Buildings>()
         {
             new Grandma(),
@@ -36,6 +38,8 @@ namespace CSharpTextBasedAdventure
 
         Grandma grandma = new Grandma();
         Factory factory = new Factory();
+
+        private Random _random = new Random();
 
         public void Start()
         {
@@ -94,20 +98,26 @@ namespace CSharpTextBasedAdventure
             {
                 int totalCps = 0;
 
-                foreach (Buildings upgrade in _buildings)
+                foreach (Buildings building in _buildings)
                 {
-                    totalCps += upgrade.CookiesPerSecond * upgrade.AmountOwned;
+                    totalCps += building.GetCps();
                 }
 
                 _amountCookies += totalCps;
 
-                await Task.Delay(1000); // wacht 1 seconde
+                if (_random.Next(100) < 5)
+                {
+                    TriggerRandomEvent();
+                }
+
+                await Task.Delay(1000);
             }
         }
 
         public void Shop()
         {
             Console.Clear();
+            Console.WriteLine($"Cookies: {_amountCookies}");
             Console.WriteLine($"Money: $ {_amountMoney}");
             Console.WriteLine("\n=== SHOP ===");
             Console.WriteLine("\nBuildings:");
@@ -136,10 +146,56 @@ namespace CSharpTextBasedAdventure
             Console.WriteLine("\n0. Terug");
         }
 
+        private void TriggerRandomEvent()
+        {
+            int eventID = _random.Next(5);
+           
+            switch (eventID)
+            {
+                case 0:
+                    _lastEventMessage = "\nGolden Cookie! +100 cookies\n";
+                    _amountCookies += 100;
+                    break;
+
+                case 1:
+                    _lastEventMessage = "\nGrandma Party! CPS verdubbeld voor deze seconde.\n";
+                    int totalCps = 0;
+
+                    foreach (Buildings building in _buildings)
+                    {
+                        totalCps += building.GetCps();
+                    }
+
+                    _amountCookies += totalCps;
+                    break;
+
+                case 2:
+                    _lastEventMessage = "\nMuis heeft koekjes gestolen... -50 cookies\n";
+                    _amountCookies = Math.Max(0, _amountCookies - 50);
+                    break;
+
+                case 3:
+                    _lastEventMessage = "\nIemand heeft wat geld in je cookies geïnvesteerd! + $ 250\n";
+                    _amountMoney += 250;
+                    break;
+
+                case 4:
+                    _lastEventMessage = "\nJe moet belasting betalen... - $ 100\n";
+                    _amountMoney = Math.Max(0, _amountMoney - 100);
+                    break;
+            }
+        }
+
         public void PlayerInfo()
         {
             Console.WriteLine($"Cookies: {_amountCookies}");
             Console.WriteLine($"Money: $ {_amountMoney}");
+
+            if (!string.IsNullOrEmpty(_lastEventMessage))
+            {
+                Console.WriteLine($"\nEVENT: {_lastEventMessage}");
+            }
+
             Console.WriteLine("Druk op spatie en dan op enter voor een cookie.");
             Console.WriteLine("Typ /sell om je cookies te verkopen voor geld.");
             Console.WriteLine("Typ /shop om naar de shop te gaan.");

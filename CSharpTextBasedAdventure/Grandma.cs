@@ -17,6 +17,7 @@ namespace CSharpTextBasedAdventure
         public override void Info()
         {
             base.Info();
+            Console.WriteLine("Een lieve oma die koekjes bakt.");
         }
     }
 }
